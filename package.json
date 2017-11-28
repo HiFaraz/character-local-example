@@ -1,0 +1,30 @@
+{
+  "name": "character-local-example",
+  "version": "0.1.0-alpha",
+  "description":
+    "Express 4.x app using Character for identity with username and password",
+  "main": "index.js",
+  "scripts": {
+    "link": "npm link character character-authentication character-local",
+    "prestart-linked": "npm run link",
+    "start-linked": "node --preserve-symlinks .",
+    "test": "mocha *.spec.js",
+    "pretest-linked": "npm run link",
+    "test-linked": "mocha --preserve-symlinks *.spec.js"
+  },
+  "author": "Faraz Syed <hello@farazsyed.com>",
+  "license": "MIT",
+  "dependencies": {
+    "character": "^0.0.0",
+    "character-authentication": "^0.0.0",
+    "character-local": "^0.0.0",
+    "connect-session-sequelize": "^5.0.1",
+    "express": "^4.16.2",
+    "sequelize": "^4.23.1",
+    "sqlite3": "^3.1.13"
+  },
+  "devDependencies": {
+    "mocha": "^4.0.1",
+    "supertest": "^3.0.0"
+  }
+}
