@@ -57,8 +57,8 @@ app.get('/register', function(req, res) {
 const server = app.listen();
 console.log(`Express started on port ${server.address().port}`);
 
-character.events.on('authentication:onboard', console.log.bind(console));
-character.events.on('authentication:authenticate', console.log.bind(console));
+character.on('authentication:onboard', console.log.bind(console));
+character.on('authentication:authenticate', console.log.bind(console));
 
 if (module.parent) {
   module.exports = { character, port: server.address().port, server };
