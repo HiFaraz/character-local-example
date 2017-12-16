@@ -34,23 +34,23 @@ const restrict = (req, res, next) => {
   }
 };
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
   res.redirect('/login');
 });
 
-app.get('/restricted', restrict, function(req, res) {
+app.get('/restricted', restrict, function (req, res) {
   res.send('Wahoo! restricted area, click to <a href="/logout">logout</a>');
 });
 
-app.get('/logout', function(req, res) {
+app.get('/logout', function (req, res) {
   req.logout();
 });
 
-app.get('/login', function(req, res) {
+app.get('/login', function (req, res) {
   res.sendFile(path.resolve(__dirname, 'login.html'));
 });
 
-app.get('/register', function(req, res) {
+app.get('/register', function (req, res) {
   res.sendFile(path.resolve(__dirname, 'register.html'));
 });
 
