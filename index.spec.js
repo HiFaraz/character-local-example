@@ -20,56 +20,56 @@ function getCookies(res) {
 
 const TEST_URL = `http://localhost:${port}`;
 
-describe('local', function() {
-  before(() => character.database.init());
+describe('local', function () {
+  before(() => character.bootstrap());
 
   after(() => server.close());
 
-  describe('POST /id/auth/local/register', function() {
-    it('should succeed', function(done) {
+  describe('POST /char/auth/local/register', function () {
+    it('should succeed', function (done) {
       request(TEST_URL)
-        .post('/id/auth/local/register')
+        .post('/char/auth/local/register')
         .type('urlencoded')
         .send('username=foo&password=bar')
         .expect('Location', '/restricted')
         .expect(303, done);
     });
 
-    it('should fail when registering a username that already exists', function(
+    it('should fail when registering a username that already exists', function (
       done,
     ) {
       request(TEST_URL)
-        .post('/id/auth/local/register')
+        .post('/char/auth/local/register')
         .type('urlencoded')
         .send('username=foo&password=bar')
         .expect('Location', '/register')
         .expect(303, done);
     });
 
-    it('should fail when registering with an empty username', function(done) {
+    it('should fail when registering with an empty username', function (done) {
       request(TEST_URL)
-        .post('/id/auth/local/register')
+        .post('/char/auth/local/register')
         .type('urlencoded')
         .send('username=&password=bar')
         .expect('Location', '/register')
         .expect(303, done);
     });
 
-    it('should fail when registering with an empty password', function(done) {
+    it('should fail when registering with an empty password', function (done) {
       request(TEST_URL)
-        .post('/id/auth/local/register')
+        .post('/char/auth/local/register')
         .type('urlencoded')
         .send('username=foo2&password=')
         .expect('Location', '/register')
         .expect(303, done);
     });
 
-    it('should login the user after registration', function(done) {
+    it('should login the user after registration', function (done) {
       request(TEST_URL)
-        .post('/id/auth/local/register')
+        .post('/char/auth/local/register')
         .type('urlencoded')
         .send('username=foo2&password=bar2')
-        .expect(303, function(err, res) {
+        .expect(303, function (err, res) {
           if (err) {
             return done(err);
           }
@@ -81,8 +81,8 @@ describe('local', function() {
     });
   });
 
-  describe('GET /', function() {
-    it('should redirect to /login', function(done) {
+  describe('GET /', function () {
+    it('should redirect to /login', function (done) {
       request(TEST_URL)
         .get('/')
         .expect('Location', '/login')
@@ -90,16 +90,16 @@ describe('local', function() {
     });
   });
 
-  describe('GET /login', function() {
-    it('should render login form', function(done) {
+  describe('GET /login', function () {
+    it('should render login form', function (done) {
       request(TEST_URL)
         .get('/login')
         .expect(200, /<form/, done);
     });
 
-    it('should display login error', function(done) {
+    it('should display login error', function (done) {
       request(TEST_URL)
-        .post('/id/auth/local')
+        .post('/char/auth/local')
         .type('urlencoded')
         .send('username=not-foo&password=bar')
         .expect('Location', '/login?reason=Unauthorized')
@@ -107,8 +107,8 @@ describe('local', function() {
     });
   });
 
-  describe('GET /logout', function() {
-    it('should redirect to /', function(done) {
+  describe('GET /logout', function () {
+    it('should redirect to /', function (done) {
       request(TEST_URL)
         .get('/logout')
         .expect('Location', '/')
@@ -116,21 +116,21 @@ describe('local', function() {
     });
   });
 
-  describe('GET /restricted', function() {
-    it('should redirect to /login without cookie', function(done) {
+  describe('GET /restricted', function () {
+    it('should redirect to /login without cookie', function (done) {
       request(TEST_URL)
         .get('/restricted')
         .expect('Location', '/login')
         .expect(302, done);
     });
 
-    it('should succeed with proper cookie', function(done) {
+    it('should succeed with proper cookie', function (done) {
       request(TEST_URL)
-        .post('/id/auth/local')
+        .post('/char/auth/local')
         .type('urlencoded')
         .send('username=foo&password=bar')
         .expect('Location', '/restricted')
-        .expect(303, function(err, res) {
+        .expect(303, function (err, res) {
           if (err) {
             return done(err);
           }
@@ -142,28 +142,28 @@ describe('local', function() {
     });
   });
 
-  describe('POST /id/auth/local', function() {
-    it('should fail without proper username', function(done) {
+  describe('POST /char/auth/local', function () {
+    it('should fail without proper username', function (done) {
       request(TEST_URL)
-        .post('/id/auth/local')
+        .post('/char/auth/local')
         .type('urlencoded')
         .send('username=not-foo&password=bar')
         .expect('Location', '/login?reason=Unauthorized')
         .expect(303, done);
     });
 
-    it('should fail without proper password', function(done) {
+    it('should fail without proper password', function (done) {
       request(TEST_URL)
-        .post('/id/auth/local')
+        .post('/char/auth/local')
         .type('urlencoded')
         .send('username=foo&password=baz')
         .expect('Location', '/login?reason=Unauthorized')
         .expect(303, done);
     });
 
-    it('should succeed with proper credentials', function(done) {
+    it('should succeed with proper credentials', function (done) {
       request(TEST_URL)
-        .post('/id/auth/local')
+        .post('/char/auth/local')
         .type('urlencoded')
         .send('username=foo&password=bar')
         .expect('Location', '/restricted')

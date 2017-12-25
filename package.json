@@ -1,12 +1,14 @@
 {
   "name": "character-local-example",
-  "version": "0.1.0-alpha",
+  "version": "0.1.0",
   "description": "Express 4.x app using Character for identity with username and password",
   "main": "index.js",
   "scripts": {
-    "build-watch:ext": "concurrently \"cd ../character && npm run build-watch\" \"cd ../character-authentication && npm run build-watch\" \"cd ../character-authenticator && npm run build-watch\" \"cd ../character-local && npm run build-watch\"",
+    "build:ext": "concurrently \"cd ../character && npm run build\" \"cd ../character-authentication && npm run build\" \"cd ../character-authenticator && npm run build\" \"cd ../character-local && npm run build\"",
+    "install:ext": "cd ../character && npm install && cd ../character-authentication && npm install && cd ../character-authenticator && npm install && cd ../character-local && npm install",
     "link": "npm link character character-authentication character-local",
     "link:ext": "cd ../character && npm link && cd ../character-authentication && npm link && cd ../character-authenticator && npm link && cd ../character-local && npm link && npm link character-authenticator",
+    "fix:ext": "cd ../character && npm run lint -- --fix && cd ../character-authentication && npm run lint -- --fix && cd ../character-authenticator && npm run lint -- --fix && cd ../character-local && npm run lint -- --fix",
     "prestart-linked": "npm run link",
     "start-linked": "node --preserve-symlinks .",
     "test": "mocha *.spec.js",

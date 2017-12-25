@@ -9,6 +9,7 @@ plugins:
         module: character-local
         registrationFailureRedirect: /register
         successRedirect: /restricted
+        table: teams
     session:
       cookie:
         maxAge: $SESSION_COOKIE_MAXAGE
